@@ -1,5 +1,5 @@
 var test = require('tape');
-var checkOptions = require('.');
+var checkOptions = require('./index');
 
 function throws(t, message, f) {
   try {
