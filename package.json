@@ -1,0 +1,22 @@
+{
+  "name": "check-options",
+  "version": "1.0.0",
+  "description": "Check an options object for required fields, invalid fields, and apply defaults.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test.js",
+    "lint": "xo --space"
+  },
+  "author": "Marek Zaluski <marekz@gmail.com>",
+  "license": "MIT",
+  "types": "index.d.ts",
+  "devDependencies": {
+    "tap": "^8.0.0",
+    "tape": "^4.6.2",
+    "xo": "^0.15.1"
+  },
+  "dependencies": {
+    "lodash": "^4.16.4",
+    "pluralize": "^2.0.0"
+  }
+}
