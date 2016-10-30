@@ -10,11 +10,31 @@ function throws(t, message, f) {
   }
 }
 
-test('should work requiring no fields', function (t) {
-  checkOptions({}, []);
+test('should do nothing with no arguments', function(t) {
+  var output = checkOptions();
+
+  t.deepEquals(output, {});
   t.end();
 });
 
+
+test('should work with empty required fields', function (t) {
+  var input = {};
+  var output = checkOptions(input, []);
+
+  t.deepEquals(output, {});
+  t.notEquals(input, output);
+  t.end();
+});
+
+test('should not modify the input object', function(t) {
+  var input = {name: 'maximus', size: 10};
+  var output = checkOptions(input, ['name'], {color: 'red', size: null});
+
+  t.notEqual(input, output);
+  t.deepEquals(output, {name: 'maximus', size: 10, color: 'red'});
+  t.end();
+})
 test('should not throw with all fields present', function (t) {
   var options = {name: 'maximus', age: 30};
   checkOptions(options, ['name', 'age']);
@@ -105,12 +125,9 @@ test('should throw with multiple invalid fields with context', function (t) {
 
 test('should apply defaults', function (t) {
   var options = {name: 'chandler', height: 5};
-  checkOptions(options, ['name'], {width: 7, height: 9}, 'myFunction');
+  var output = checkOptions(options, ['name'], {width: 7, height: 9}, 'myFunction');
 
-  t.equals(options.name, 'chandler');
-  t.equals(options.height, 5);
-  t.equals(options.width, 7);
-
+  t.deepEquals(output, {name: 'chandler', height: 5, width: 7});
   t.end();
 });
 
@@ -118,7 +135,7 @@ test('should work without defaults and with context ', function (t) {
   var options = {name: 'chandler'};
   checkOptions(options, ['name'], 'myFunction');
 
-  t.equals(options.name, 'chandler');
+  t.deepEquals(options, {name: 'chandler'});
 
   t.end();
 });

@@ -23,10 +23,11 @@ module.exports = function requiredFields(options, required, defaults, context) {
   invalid = _.sortBy(invalid);
 
   if (!missing.length && !invalid.length) {
+    var result = {};
     if (defaults) {
-      _.defaults(options, defaults);
+      _.assign(result, defaults, options);
     }
-    return;
+    return result;
   }
 
   var message = '';
