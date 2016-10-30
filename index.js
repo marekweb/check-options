@@ -9,9 +9,11 @@ function jumpStack(error) {
   error.stack = stackParts.join('\n');
 }
 
-module.exports = function requiredFields(options /*, required, defaults, context */) {
+module.exports = function requiredFields(options /* , required, defaults, context */) {
   options = options || {};
-  var required, defaults, context;
+  var required;
+  var defaults;
+  var context;
 
   var args = _.toArray(arguments).slice(1, 4);
   if (_.isString(_.last(args))) {
@@ -28,7 +30,7 @@ module.exports = function requiredFields(options /*, required, defaults, context
       defaults = args[i];
       continue;
     }
-}
+  }
 
   var optionKeys = _.keys(options);
   var missing = _.difference(required, optionKeys);

@@ -10,13 +10,12 @@ function throws(t, message, f) {
   }
 }
 
-test('should do nothing with no arguments', function(t) {
+test('should do nothing with no arguments', function (t) {
   var output = checkOptions();
 
   t.deepEquals(output, {});
   t.end();
 });
-
 
 test('should work with empty required fields', function (t) {
   var input = {};
@@ -27,14 +26,15 @@ test('should work with empty required fields', function (t) {
   t.end();
 });
 
-test('should not modify the input object', function(t) {
+test('should not modify the input object', function (t) {
   var input = {name: 'maximus', size: 10};
   var output = checkOptions(input, ['name'], {color: 'red', size: null});
 
   t.notEqual(input, output);
   t.deepEquals(output, {name: 'maximus', size: 10, color: 'red'});
   t.end();
-})
+});
+
 test('should not throw with all fields present', function (t) {
   var options = {name: 'maximus', age: 30};
   checkOptions(options, ['name', 'age']);
@@ -142,7 +142,7 @@ test('should work without defaults and with context ', function (t) {
   t.end();
 });
 
-test('should work with defaults without required fields', function(t) {
+test('should work with defaults without required fields', function (t) {
   var options = {color: 'red'};
 
   var output = checkOptions(options, {color: null});
@@ -152,10 +152,10 @@ test('should work with defaults without required fields', function(t) {
   t.end();
 });
 
-test('should throw with defaults, no required fields, and invalid field', function(t) {
+test('should throw with defaults, no required fields, and invalid field', function (t) {
   var options = {size: 'large', color: 'red'};
 
-  throws(t, 'Invalid field (size)', function() {
+  throws(t, 'Invalid field (size)', function () {
     checkOptions(options, {color: null});
   });
 
