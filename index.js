@@ -9,11 +9,26 @@ function jumpStack(error) {
   error.stack = stackParts.join('\n');
 }
 
-module.exports = function requiredFields(options, required, defaults, context) {
+module.exports = function requiredFields(options /*, required, defaults, context */) {
   options = options || {};
-  if (!context && typeof (defaults) === 'string') {
-    context = defaults;
+  var required, defaults, context;
+
+  var args = _.toArray(arguments).slice(1, 4);
+  if (_.isString(_.last(args))) {
+    context = args.pop();
   }
+
+  for (var i = 0; i < args.length; i++) {
+    if (_.isArray(args[i])) {
+      required = args[i];
+      continue;
+    }
+
+    if (_.isObject(args[i])) {
+      defaults = args[i];
+      continue;
+    }
+}
 
   var optionKeys = _.keys(options);
   var missing = _.difference(required, optionKeys);
@@ -24,9 +39,7 @@ module.exports = function requiredFields(options, required, defaults, context) {
 
   if (!missing.length && !invalid.length) {
     var result = {};
-    if (defaults) {
-      _.assign(result, defaults, options);
-    }
+    _.assign(result, defaults, options);
     return result;
   }
 

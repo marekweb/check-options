@@ -128,14 +128,36 @@ test('should apply defaults', function (t) {
   var output = checkOptions(options, ['name'], {width: 7, height: 9}, 'myFunction');
 
   t.deepEquals(output, {name: 'chandler', height: 5, width: 7});
+  t.notEqual(options, output);
   t.end();
 });
 
 test('should work without defaults and with context ', function (t) {
+  t.plan(2);
   var options = {name: 'chandler'};
-  checkOptions(options, ['name'], 'myFunction');
+  var output = checkOptions(options, ['name'], 'myFunction');
 
-  t.deepEquals(options, {name: 'chandler'});
+  t.deepEquals(output, {name: 'chandler'});
+  t.notEqual(options, output);
+  t.end();
+});
+
+test('should work with defaults without required fields', function(t) {
+  var options = {color: 'red'};
+
+  var output = checkOptions(options, {color: null});
+
+  t.deepEqual(output, {color: 'red'});
+  t.notEqual(options, output);
+  t.end();
+});
+
+test('should throw with defaults, no required fields, and invalid field', function(t) {
+  var options = {size: 'large', color: 'red'};
+
+  throws(t, 'Invalid field (size)', function() {
+    checkOptions(options, {color: null});
+  });
 
   t.end();
 });
