@@ -1,6 +1,6 @@
 {
   "name": "check-options",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Check an options object for required fields, invalid fields, and apply defaults.",
   "main": "index.js",
   "scripts": {
